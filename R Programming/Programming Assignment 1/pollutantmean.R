@@ -18,9 +18,11 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   for(cur in id) {
     filename <- sprintf("%s%s%03d.csv", directory, .Platform$file.sep, cur)
     data <- read.csv(filename)
-    sum(!is.na(data[pollutant]))
     sumall <- sumall + sum(data[[pollutant]], na.rm = TRUE)
-    nsum <- nsum + sum(!is.na(data[[pollutant]]))
+    nsum <- nsum + sum(!is.na(data[pollutant]))
   }
   sumall / nsum
 }
+
+# Error in FUN(X[[1L]], ...) : 
+#   only defined on a data frame with all numeric variables
