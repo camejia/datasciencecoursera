@@ -11,4 +11,16 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   
   ## Return the mean of the pollutant across all monitors list
   ## in the 'id' vector (ignoring NA values)
+  
+  sumall <- 0
+  nsum <- 0L
+  
+  for(cur in id) {
+    filename <- sprintf("%s%s%03d.csv", directory, .Platform$file.sep, cur)
+    data <- read.csv(filename)
+    sum(!is.na(data[pollutant]))
+    sumall <- sumall + sum(data[[pollutant]], na.rm = TRUE)
+    nsum <- nsum + sum(!is.na(data[[pollutant]]))
+  }
+  sumall / nsum
 }
